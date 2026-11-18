@@ -1,0 +1,14 @@
+{
+  "name": "群核东方展厅",
+  "scene": "./hall.glb",
+  "stageTop": 0.88,
+  "autoFit": true,
+  "transform": {
+    "position": [0, 0, 0],
+    "rotation": [0, 0, 0],
+    "scale": 1
+  },
+  "colliders": [
+    { "type": "circle", "x": 0, "z": 0, "radius": 2.85 }
+  ]
+}

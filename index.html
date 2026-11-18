@@ -1,0 +1,369 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+  <meta name="theme-color" content="#130807">
+  <meta name="description" content="Material Magician 东方醒狮沉浸式 3D 数字艺术展厅">
+  <title>Material Magician | 东方醒狮 · 数字艺术展厅</title>
+</head>
+<body>
+  <div id="app">
+    <div id="scene-container" aria-hidden="true"></div>
+    <div class="atmosphere" aria-hidden="true"></div>
+    <div class="grain" aria-hidden="true"></div>
+
+    <header class="topbar">
+      <div class="brand-block">
+        <div class="brand-seal" aria-hidden="true"><span>狮</span></div>
+        <div class="brand-copy">
+          <p class="eyebrow">MATERIAL MAGICIAN</p>
+          <h1>东方醒狮 <span>· 数字艺术展厅</span></h1>
+        </div>
+      </div>
+
+      <div class="poetic-mark" aria-hidden="true">
+        <span></span>
+        <p>东方有灵 · 材质生辉</p>
+        <span></span>
+      </div>
+
+      <div class="top-actions">
+        <div class="mode-switch" aria-label="观察模式">
+          <button class="mode-button active" type="button" data-mode="exhibition">
+            <span class="mode-dot"></span> Exhibition
+          </button>
+          <button class="mode-button" type="button" data-mode="explore">
+            <span class="mode-dot"></span> Explore
+          </button>
+          <button class="mode-button" type="button" data-mode="roam">
+            <span class="mode-dot"></span> Roam
+          </button>
+        </div>
+        <button id="panelToggle" class="icon-button panel-toggle" type="button" aria-label="打开控制面板" aria-expanded="false">
+          <span></span><span></span><span></span>
+        </button>
+      </div>
+    </header>
+
+    <nav id="viewSwitch" class="view-switch" aria-label="观察机位"></nav>
+
+    <aside class="left-panel" aria-label="作品介绍与策展导览">
+      <div class="panel-kicker">
+        <span>CURRENT WORK</span>
+        <span class="kicker-line"></span>
+        <span>NO. 01</span>
+      </div>
+      <div class="work-heading">
+        <div class="work-number">醒</div>
+        <div>
+          <h2>小狮童 · 阿醒</h2>
+          <p>THE LION DANCE CHILD</p>
+        </div>
+      </div>
+      <p class="work-intro">
+        一位头戴南狮狮头、正在起势的 Q 版舞狮孩童。传统图腾不再只是被观看的符号，而成为可以旋转、触碰与重新赋材的数字生命。
+      </p>
+
+      <div class="culture-line">
+        <span>南狮</span>
+        <span>国潮潮玩</span>
+        <span>AI 材质</span>
+      </div>
+
+      <div class="exhibition-stats" aria-label="展项数据">
+        <div><strong>09</strong><span>材质版本</span></div>
+        <div><strong>09</strong><span>骨骼动作</span></div>
+        <div><strong>03</strong><span>布景光调</span></div>
+      </div>
+
+      <dl class="model-facts">
+        <div>
+          <dt>模型三角面</dt>
+          <dd id="triangleCount">正在读取</dd>
+        </div>
+        <div>
+          <dt>材质系统</dt>
+          <dd>PBR · GLB</dd>
+        </div>
+        <div>
+          <dt>骨骼状态</dt>
+          <dd id="skeletonStatus">静态模型 · 9 段动作可播</dd>
+        </div>
+        <div>
+          <dt>展厅来源</dt>
+          <dd id="environmentSource">程序化临时展厅</dd>
+        </div>
+      </dl>
+
+      <section class="curation-block" aria-label="策展导览">
+        <div class="curation-heading">
+          <div>
+            <p class="section-eyebrow">CURATORIAL TOUR</p>
+            <h3>一条醒狮的数字生命线</h3>
+          </div>
+          <span id="chapterIndex">01 / 06</span>
+        </div>
+        <div id="curationList" class="curation-list"></div>
+        <div class="curation-copy">
+          <p id="chapterKicker" class="chapter-kicker">ORIGIN / 源起</p>
+          <h4 id="chapterTitle">南狮为魂，孩童为形</h4>
+          <p id="chapterBody" class="chapter-body"></p>
+          <p id="chapterCue" class="chapter-cue"></p>
+        </div>
+      </section>
+
+      <p class="shortcut-line">快捷键 · <b>1 / 2 / 3</b> 材质　<b>V</b> 机位　<b>R</b> 复位　<b>A</b> 自动旋转<br>点击模型上的编号光点看部位，点击鼓 / 香炉 / 龙 / 宫灯看空间展品。</p>
+    </aside>
+
+    <aside id="controlRail" class="control-rail" aria-label="作品控制">
+      <section class="panel-section stage-panel">
+        <div class="section-head compact">
+          <div>
+            <p class="section-eyebrow">STAGE MOOD</p>
+            <h2>布景光调</h2>
+          </div>
+          <span id="stageMoodChip" class="offline-chip">PROCEDURAL</span>
+        </div>
+        <p class="section-copy">群核空间资产暂未就位，先以程序化东方展厅完成展示；三套光调分别对应素模、金工与彩釉的观看方式。</p>
+
+        <div id="moodList" class="mood-list" role="radiogroup" aria-label="布景光调"></div>
+
+        <p class="stage-note">切换只改变灯光、雾与背景，不重新加载模型，可在展演中随时过渡。</p>
+      </section>
+
+      <section class="panel-section material-panel">
+        <div class="section-head">
+          <div>
+            <p class="section-eyebrow">MATERIAL LAB</p>
+            <h2>材质实验室</h2>
+          </div>
+          <span id="materialCount" class="section-count">09</span>
+        </div>
+        <p id="materialDescription" class="section-copy">保留狮头、鬃毛、服饰褶皱与祥云浮雕的完整形体，以中性素模呈现造型本身的张力。</p>
+
+        <div id="materialList" class="material-list" role="list"></div>
+        <div id="materialDossier" class="material-dossier"></div>
+      </section>
+
+      <section class="panel-section view-panel">
+        <div class="section-head compact">
+          <div>
+            <p class="section-eyebrow">TECHNICAL VIEW</p>
+            <h2>技术视图</h2>
+          </div>
+          <span id="viewModeChip" class="offline-chip">SHADED</span>
+        </div>
+        <p class="section-copy">把同一件作品拆成网格、法线与骨架来看；骨骼视图需要先播放一段动作。</p>
+        <div id="viewModeList" class="view-mode-list" role="group" aria-label="技术视图"></div>
+        <p id="viewModeHint" class="view-mode-hint">当前为正常 PBR 材质。</p>
+      </section>
+
+      <section class="panel-section portal-panel">
+        <div class="section-head compact">
+          <div>
+            <p class="section-eyebrow">PORTAL</p>
+            <h2>街市传送</h2>
+          </div>
+          <span class="offline-chip">STREET</span>
+        </div>
+        <p class="section-copy">跳过步行，直接进入门外的长安街市；在街市里可以继续漫游，随时退回展台。</p>
+        <button id="portalStreet" class="portal-button" type="button">
+          <span>传送至街市</span><i>→</i>
+        </button>
+        <button id="portalSplat" class="portal-button portal-button--alt" type="button">
+          <span>SpatialGen 街景（全景）</span><i>→</i>
+        </button>
+        <p class="section-copy portal-hint">3DGS 版因 spz v3 不兼容、ply 在当前环境渲染黑屏，改用同一空间的全景图：1.1MB，秒开，可拖动环视。</p>
+      </section>
+
+      <section class="panel-section story-panel">
+        <div class="section-head compact">
+          <div>
+            <p class="section-eyebrow">STORY IN 3D</p>
+            <h2>舞狮故事</h2>
+          </div>
+          <span class="offline-chip">05 CHAPTERS</span>
+        </div>
+        <p class="section-copy">左墙一列五座展台，按顺序讲清楚一头狮子从「开光」到「收势」的全过程。</p>
+        <div id="storyList" class="story-list"></div>
+      </section>
+
+      <section class="panel-section training-panel">
+        <div class="section-head compact">
+          <div>
+            <p class="section-eyebrow">TRAINING ROOM</p>
+            <h2>练功房</h2>
+          </div>
+          <span class="offline-chip">04 DRILLS</span>
+        </div>
+        <p class="section-copy">右侧展室里摆着四件训练器械：马步桩、石锁、高桩、鼓。</p>
+        <div id="trainingList" class="story-list"></div>
+      </section>
+
+      <section class="panel-section action-panel">
+        <div class="section-head compact">
+          <div>
+            <p class="section-eyebrow">MOTION THEATER</p>
+            <h2>动作剧场</h2>
+          </div>
+          <span class="live-chip"><i></i> MIXAMO</span>
+        </div>
+        <div id="actionGrid" class="action-grid"></div>
+        <p class="action-note">跳跃是「起跳·滞空·落地」三合一，滑铲是「启动·滑行·结束」三合一，蹲伏行走为独立循环；其余为单段动作。动作会沿用当前所选材质。</p>
+        <div class="action-keys" aria-label="角色漫游按键">
+          <span><kbd>W</kbd><kbd>A</kbd><kbd>S</kbd><kbd>D</kbd><em>移动</em></span>
+          <span><kbd>Shift</kbd><em>奔跑</em></span>
+          <span><kbd>Space</kbd><em>跳跃</em></span>
+          <span><kbd>C</kbd><em>蹲伏</em></span>
+          <span><kbd>X</kbd><em>滑铲</em></span>
+        </div>
+      </section>
+
+      <section class="panel-section ai-panel">
+        <div class="section-head compact">
+          <div>
+            <p class="section-eyebrow">AI MATERIAL CREATOR</p>
+            <h2>材质创想</h2>
+          </div>
+          <span id="aiConnectionChip" class="offline-chip">NOT CONNECTED</span>
+        </div>
+        <p class="section-copy">上传参考图，描述你想让醒狮成为的材质。</p>
+
+        <label id="uploadDrop" class="upload-drop" for="aiReference">
+          <input id="aiReference" type="file" accept="image/png,image/jpeg,image/webp" hidden>
+          <span class="upload-icon">＋</span>
+          <span class="upload-copy">
+            <strong>拖入材质参考图</strong>
+            <small>PNG / JPG / WEBP · 仅本地预览</small>
+          </span>
+          <img id="referenceImage" alt="材质参考图预览">
+        </label>
+
+        <div class="ai-field-row">
+          <label class="sr-only" for="aiMaterialName">材质名称</label>
+          <input id="aiMaterialName" type="text" maxlength="40" placeholder="材质名称，如：雨过天青">
+        </div>
+        <div class="ai-field-row">
+          <label class="sr-only" for="aiPrompt">材质描述</label>
+          <textarea id="aiPrompt" rows="2" maxlength="240" placeholder="描述纹理、光泽、颜色与情绪…"></textarea>
+        </div>
+        <div class="material-tags" aria-label="示例材质">
+          <button type="button" data-prompt="和田青玉，温润半透，细密玉纹，柔和哑光">玉石</button>
+          <button type="button" data-prompt="深色乌木，细直木纹，手工打磨，温润木蜡油">木质</button>
+          <button type="button" data-prompt="烟灰色手工玻璃，内部流动气泡，边缘带暖金反光">玻璃</button>
+        </div>
+
+        <div class="ai-pipeline" aria-label="AI 材质生成流程">
+          <div class="pipeline-step is-ready"><span>01</span><strong>参考图</strong><small>LOCAL INPUT</small></div>
+          <i>→</i>
+          <div class="pipeline-step"><span>02</span><strong>语义解析</strong><small>BACKEND</small></div>
+          <i>→</i>
+          <div class="pipeline-step"><span>03</span><strong>PBR 迁移</strong><small>LUX3D</small></div>
+          <i>→</i>
+          <div class="pipeline-step"><span>04</span><strong>GLB 预览</strong><small>PENDING</small></div>
+        </div>
+
+        <button id="aiGenerateButton" class="primary-button" type="button">
+          <span>生成材质</span>
+          <span class="button-arrow">↗</span>
+        </button>
+        <div id="aiResultPreview" class="ai-result-preview">
+          <span>RESULT PREVIEW</span>
+          <p>真实生成结果将在此显示</p>
+        </div>
+        <div id="aiTaskStatus" class="task-status" data-state="idle">
+          <span class="task-light"></span>
+          <p>等待 Lux3D 后端接口接入，不会显示虚构结果。</p>
+        </div>
+      </section>
+    </aside>
+
+    <div class="scene-dock" aria-label="材质缩略图与视图控制">
+      <div class="dock-materials">
+        <span class="dock-label">MATERIAL<br>SEQUENCE</span>
+        <div id="dockMaterialButtons" class="dock-swatches"></div>
+        <div class="dock-current">
+          <span id="currentMaterialNumber">01</span>
+          <small>/ <span id="materialTotal">09</span></small>
+          <p id="currentMaterialName">原始醒狮</p>
+        </div>
+      </div>
+
+      <div class="dock-divider"></div>
+
+      <div class="dock-actions">
+        <button id="autoRotateToggle" class="dock-action active" type="button" aria-pressed="true">
+          <span class="rotate-glyph">↻</span>
+          <span><small>AUTO ROTATE</small><strong>自动旋转</strong></span>
+        </button>
+        <button id="resetView" class="dock-action" type="button">
+          <span class="home-glyph">⌂</span>
+          <span><small>DEFAULT VIEW</small><strong>复位视角</strong></span>
+        </button>
+      </div>
+    </div>
+
+    <div id="hotspotLayer" class="hotspot-layer" aria-hidden="true"></div>
+
+    <div id="hotspotCard" class="hotspot-card" hidden>
+      <button id="hotspotClose" class="hotspot-close" type="button" aria-label="关闭热点说明">×</button>
+      <div class="hotspot-card-head">
+        <p id="hotspotKicker" class="hotspot-kicker"></p>
+        <span id="hotspotIndex"></span>
+      </div>
+      <h3 id="hotspotTitle"></h3>
+      <p id="hotspotBody" class="hotspot-body"></p>
+      <div class="hotspot-actions">
+        <button id="hotspotPrev" type="button">上一处</button>
+        <button id="hotspotNext" type="button">下一处</button>
+        <button id="hotspotReset" type="button">返回全景</button>
+      </div>
+    </div>
+
+    <div class="explore-hud" aria-hidden="true">
+      <div class="explore-crosshair" aria-hidden="true"><span></span><span></span></div>
+      <div class="explore-header">
+        <span class="live-chip"><i></i> FREE EXPLORE</span>
+        <p>第一人称漫游 · <span id="exploreSpaceName">程序化东方展厅</span></p>
+      </div>
+      <div class="explore-help">
+        <div><kbd>W</kbd><kbd>A</kbd><kbd>S</kbd><kbd>D</kbd><span>移动</span></div>
+        <div><kbd>SHIFT</kbd><span>加速</span></div>
+        <div><kbd>ESC</kbd><span>释放鼠标</span></div>
+        <button id="exploreReturn" class="return-button" type="button">返回中央展台</button>
+      </div>
+      <p id="pointerLockHint" class="pointer-lock-hint">点击画面锁定视角</p>
+    </div>
+
+    <div id="splatStage" class="splat-stage" hidden>
+      <button id="splatBack" class="splat-back" type="button">← 返回展厅</button>
+      <p class="splat-note">SpatialGen · 3DGS 生成街景 · 拖动旋转 / 滚轮缩放</p>
+      <div id="splatLoading" class="splat-loading">
+        <span class="splat-spinner" aria-hidden="true"></span>
+        <strong>正在进入街市</strong>
+        <small id="splatLoadingHint">首次加载需要下载 7.9MB 场景并初始化渲染器</small>
+      </div>
+    </div>
+
+    <div id="loadingOverlay" class="loading-overlay">
+      <div class="loader-seal"><span></span><i>狮</i></div>
+      <p id="loadingTitle" class="loading-title">正在构筑东方展厅</p>
+      <p id="loadingSubtitle" class="loading-subtitle">灯光、材质与空间正在就位</p>
+      <div class="loading-track"><span id="loadingProgress"></span></div>
+      <span id="loadingPercent" class="loading-percent">0%</span>
+      <button id="reloadExperience" class="recovery-button" type="button" hidden>重新载入展厅</button>
+    </div>
+
+    <div id="toast" class="toast" role="status" aria-live="polite"></div>
+
+    <footer class="signature">
+      <span>MATERIAL MAGICIAN · 2026</span>
+      <span>09 MATERIALS · 09 MOTION CLIPS · 03 STAGE MOODS</span>
+    </footer>
+  </div>
+
+  <noscript>请启用 JavaScript 以进入三维展厅。</noscript>
+  <script type="module" src="/src/main.js"></script>
+</body>
+</html>
